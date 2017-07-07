@@ -1,6 +1,5 @@
 target
 bin
-.settings
 .cache-main
 .classpath
 .project
