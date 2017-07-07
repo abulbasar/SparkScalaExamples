@@ -46,16 +46,21 @@ object TwitterAnalyzer {
     messages.map(_._2).foreachRDD{rdd =>
       
       if(!rdd.isEmpty()){
-        sqlContext
-        .read
-        .json(rdd)
-        .select("text")
-        .select(toTags(col("text")).alias("tags"))
-        .select(explode(col("tags")).alias("tag"))
-        .groupBy("tag")
-        .count
-        .orderBy(desc("count"))
-        .show(5)
+
+        try{
+          sqlContext
+          .read
+          .json(rdd)
+          .select("text")
+          .select(toTags(col("text")).alias("tags"))
+          .select(explode(col("tags")).alias("tag"))
+          .groupBy("tag")
+          .count
+          .orderBy(desc("count"))
+          .show(5)
+        }catch{
+          case ex:Exception => ex.printStackTrace()         
+        }
       
       }
       
