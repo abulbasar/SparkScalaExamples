@@ -5,6 +5,20 @@ import org.apache.spark.streaming.Seconds
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.sql.SQLContext
 
+/*
+Create Cassandra table
+create table demo.tweets(
+    id text primary key, 
+    lang text,
+    text text,
+    name text,
+    source text, 
+    created_at text,
+    
+);
+
+
+*/
 
 object StreamToCassandra {
   def main(args:Array[String]) {
