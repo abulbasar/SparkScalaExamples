@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
-		<sparkVersion>2.1.1</sparkVersion>
+		<sparkVersion>2.2.0</sparkVersion>
 		<scalaVersion>2.11</scalaVersion>
     		<maven.compiler.target>1.8</maven.compiler.target>
     		<maven.compiler.source>1.8</maven.compiler.source>
@@ -40,13 +40,18 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql-kafka-0-10_${scalaVersion}</artifactId>
+			<version>${sparkVersion}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-streaming-kafka_${scalaVersion}</artifactId>
 			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.datastax.spark</groupId>
 			<artifactId>spark-cassandra-connector_${scalaVersion}</artifactId>
-			<version>2.0.2</version>
+			<version>2.0.6</version>
 		</dependency>	
 		<dependency>
     			<groupId>commons-codec</groupId>
