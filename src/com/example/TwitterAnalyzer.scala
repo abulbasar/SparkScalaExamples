@@ -1,20 +1,20 @@
 
 
+package com.example
+
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.streaming.Seconds
-import org.apache.spark.streaming.kafka.{ KafkaUtils, OffsetRange, HasOffsetRanges }
-import org.apache.spark.storage.StorageLevel
+import org.apache.spark.streaming.kafka.KafkaUtils
 import kafka.serializer.StringDecoder
-import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
-
 import org.apache.spark.sql.functions._
+import scala.reflect.api.materializeTypeTag
 
 
 object TwitterAnalyzer {
 
-  def main(args: Array[String]): Unit = {
+  def main(args:Array[String]) {
 
     val conf = new SparkConf().
       setAppName("DirectKafkaWordCount").

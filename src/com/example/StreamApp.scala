@@ -1,6 +1,8 @@
+package com.example
+
 import org.apache.spark.{SparkContext, SparkConf}
 import org.apache.spark.streaming.StreamingContext
-import org.apache.spark.streaming.Seconds 
+import org.apache.spark.streaming.Seconds
 import org.apache.spark.storage.StorageLevel
 
 

@@ -1,4 +1,6 @@
 
+package com.example
+
 import java.util.Properties
 import scala.collection.JavaConverters._
 

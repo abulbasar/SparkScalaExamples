@@ -1,13 +1,21 @@
-import org.apache.spark.sql.SparkSession
+package com.example
+
 import java.util.concurrent.Executors
+
+import scala.collection.Seq
 import scala.concurrent._
 import scala.concurrent.duration._
+
+import org.apache.spark.SparkConf
 import org.apache.spark.sql.Dataset
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.SaveMode
-import org.apache.spark.SparkConf
+import org.apache.spark.sql.SparkSession
 
-object MyApp {
+
+object ConcurrentApp {
+  
+  
   def main(args: Array[String]) {
 
     val conf = new SparkConf()
