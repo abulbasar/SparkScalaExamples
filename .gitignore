@@ -5,3 +5,4 @@ bin
 .project
 .DS_Store
 /out2/
+.settings
