@@ -36,6 +36,7 @@ object ConcurrentApp {
     val tasks = Seq(
       taskA(df, "out1"),
       taskB(df, "out2"))
+      
     Await.result(Future.sequence(tasks), Duration(1, MINUTES))
     spark.close()
     pool.shutdown()
