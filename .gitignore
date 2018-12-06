@@ -9,3 +9,5 @@ bin
 /.idea/
 
 com.example.iml
+output
+out
