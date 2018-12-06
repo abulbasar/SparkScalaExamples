@@ -6,3 +6,6 @@ bin
 .DS_Store
 /out2/
 .settings
+/.idea/
+
+com.example.iml
