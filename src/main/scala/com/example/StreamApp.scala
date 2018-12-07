@@ -5,6 +5,11 @@ import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.streaming.Seconds
 import org.apache.spark.storage.StorageLevel
 
+/*
+* Before running this application, start the socket streaming source by
+* $ nc -nlk 9999
+*
+* */
 
 object StreamApp {
   
@@ -28,7 +33,8 @@ object StreamApp {
     
     val ssc = StreamingContext.getOrCreate(checkpointDir, createSSC)
     
-    val raw = ssc.socketTextStream("localhost", 9999, StorageLevel.MEMORY_ONLY)
+    val raw = ssc.socketTextStream("localhost"
+      , 9999, StorageLevel.MEMORY_ONLY)
     raw.saveAsTextFiles(rawStorage + "/stream", "")
     
     raw.print()
