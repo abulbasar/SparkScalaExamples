@@ -11,3 +11,5 @@ bin
 com.example.iml
 output
 out
+/spark-checkpoint/
+/raw-storage/
