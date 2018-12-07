@@ -17,26 +17,20 @@ object KafkaDirectStream {
 
   var spark:SparkSession = _
   var sc:SparkContext = _
-  val checkpointDir = "checkpoint"
-
-  def createSSC():StreamingContext= {
-    val ssc =  new StreamingContext(sc, Seconds(3))
-    ssc.checkpoint(checkpointDir)
-    ssc
-  }
-
 
   def main(args: Array[String]): Unit = {
 
     val appName = getClass.getName
-    val conf = new SparkConf().setAppName(appName).setIfMissing("spark.master", "local[*]")
+    val conf = new SparkConf()
+      .setAppName(appName)
+      .setIfMissing("spark.master", "local[*]")
 
     spark = SparkSession.builder().config(conf).getOrCreate()
     sc = spark.sparkContext
 
     val topics = Seq("T1").toSet
 
-    val ssc = StreamingContext.getOrCreate(checkpointDir, createSSC)
+    val ssc = new StreamingContext(sc, Seconds(3))
 
     val kafkaParams = Map[String, String](
         "bootstrap.servers" -> "localhost:9092"
@@ -45,7 +39,8 @@ object KafkaDirectStream {
     )
 
 
-    val stream = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaParams, topics)
+    val stream = KafkaUtils.createDirectStream[String, String
+          , StringDecoder, StringDecoder](ssc, kafkaParams, topics)
 
     val values = stream.map(_._2)
     values.print()

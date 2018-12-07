@@ -18,7 +18,7 @@ object AccumulatorExample {
 
     rdd.map{v =>
       processed.add(1)
-      //Thread.sleep(500)
+      Thread.sleep(500)
       (v, v * 2)
     }.collect().foreach(println)
 

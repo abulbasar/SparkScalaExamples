@@ -13,3 +13,5 @@ output
 out
 /spark-checkpoint/
 /raw-storage/
+/checkpoint/
+/spark-warehouse/
