@@ -35,6 +35,7 @@ object StreamApp {
     
     val raw = ssc.socketTextStream("localhost"
       , 9999, StorageLevel.MEMORY_ONLY)
+
     raw.saveAsTextFiles(rawStorage + "/stream", "")
     
     raw.print()
