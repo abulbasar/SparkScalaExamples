@@ -1,24 +1,9 @@
-package com.example
+package com.example.streaming
 
-import org.apache.spark.sql.SparkSession
-import org.apache.spark.SparkConf
-import org.apache.spark.sql.streaming.OutputMode
-import javassist.util.Trigger
-import org.apache.spark.sql.streaming.Trigger
-import org.apache.spark.sql.streaming.StreamingQueryListener.QueryProgressEvent
-import org.apache.spark.sql.streaming.StreamingQueryListener.QueryStartedEvent
-import org.apache.spark.sql.streaming.StreamingQueryListener.QueryTerminatedEvent
-import org.apache.spark.sql.streaming.StreamingQueryListener
-import org.apache.spark.sql.ForeachWriter
-import org.apache.spark.sql.Row
 import com.example.helper.CassandraSink
-import org.apache.spark.streaming.Durations
-import scala.concurrent.duration.Duration
-
-/*
- * Create simple file stream source using the following app
- * https://github.com/abulbasar/pyspark-examples/blob/master/random_file_generator.py
- * */
+import org.apache.spark.SparkConf
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.streaming.Trigger
 
 object StructuredStreamApp {
   def main(args: Array[String]) {
@@ -45,8 +30,6 @@ object StructuredStreamApp {
       }
     })
     */
-
-    import spark.implicits._
 
     //Source
     val stream = spark

@@ -1,17 +1,10 @@
-package main.scala
-
-package com.example
+package com.example.streaming.kafka
 
 import kafka.serializer.StringDecoder
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.kafka.KafkaUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-
-
-/*
- * Set the project JDK version to 1.8 for lambda expressions to work.
- */
+import org.apache.spark.{SparkConf, SparkContext}
 
 object KafkaDirectStream {
 
@@ -45,7 +38,7 @@ object KafkaDirectStream {
     val values = stream.map(_._2)
     values.print()
 
-    
+
     ssc.start()
     ssc.awaitTermination()
   }
