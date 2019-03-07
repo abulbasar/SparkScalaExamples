@@ -3,10 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>SparkExample</groupId>
-	<artifactId>com.example</artifactId>
+	<artifactId>SparkScalaExamples</artifactId>
 	<version>0.1</version>
 
 	<build>
+        <finalName>${project.name}_${project.version}</finalName>
 		<sourceDirectory>src/main/scala</sourceDirectory>
 		<testSourceDirectory>src/test/scala</testSourceDirectory>
 		<plugins>
