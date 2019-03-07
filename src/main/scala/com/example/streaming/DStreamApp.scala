@@ -4,7 +4,7 @@ import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
-object StreamApp {
+object DStreamApp {
 
 
   def main(args:Array[String]) {
@@ -15,8 +15,8 @@ object StreamApp {
 
     val sc = new SparkContext(conf)
 
-    val checkpointDir = "spark-checkpoint"
-    val rawStorage = "raw-storage"
+    val checkpointDir = "spark-checkpoint" + sc.applicationId + "/"
+    val rawStorage = "/tmp/streaming/" + sc.applicationId + "/"
 
     def createSSC() = {
       val ssc =  new StreamingContext(sc, Seconds(5))
@@ -29,7 +29,7 @@ object StreamApp {
     val raw = ssc.socketTextStream("localhost"
       , 9999, StorageLevel.MEMORY_ONLY)
 
-    raw.saveAsTextFiles(rawStorage + "/stream", "")
+    raw.saveAsTextFiles(rawStorage , "")
 
     raw.print()
 

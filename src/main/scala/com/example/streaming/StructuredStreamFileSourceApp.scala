@@ -5,7 +5,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.streaming.Trigger
 
-object StructuredStreamApp {
+object StructuredStreamFileSourceApp {
   def main(args: Array[String]) {
 
     val conf = new SparkConf()
@@ -56,7 +56,8 @@ object StructuredStreamApp {
       .option("checkpointLocation", "checkpoint")
       .start()
 
-    val cassandraSink = new CassandraSink("demo", "localhost:9042")
+    val cassandraSink = new CassandraSink("demo"
+      , "localhost:9042")
 
     stream
       .writeStream

@@ -1,5 +1,8 @@
 package com.example.dataframe
 
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+
 import org.apache.spark.SparkConf
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
@@ -34,24 +37,28 @@ object DatasetExample {
     // Schema is already defined as case class
   }
 
+  def toStock(line:String):Stock = {
+    val tokens = line.split(",")
+    val dateFormatter = new SimpleDateFormat("yyyy-MM-dd")
+    Stock(
+      new Timestamp(dateFormatter.parse(tokens(0)).getTime)
+      , tokens(1).toDouble
+      , tokens(2).toDouble
+      , tokens(3).toDouble
+      , tokens(4).toDouble
+      , tokens(5).toDouble
+      , tokens(6).toDouble
+      , tokens(7)
+    )
+  }
+
   def convertRddToDataset(inputPath:String):Dataset[Stock] = {
     val rdd = sc.textFile(inputPath)
 
     val rddStocks:RDD[Stock] = rdd
       .filter(!_.startsWith("date"))
-      .map(line => {
-        val tokens = line.split(",")
-        Stock(
-          null
-          , tokens(1).toDouble
-          , tokens(2).toDouble
-          , tokens(3).toDouble
-          , tokens(4).toDouble
-          , tokens(5).toDouble
-          , tokens(6).toDouble
-          , tokens(7)
-        )
-      })
+      .map(toStock)
+
     import spark.implicits._
     rddStocks.toDS()
   }
@@ -63,19 +70,7 @@ object DatasetExample {
 
     ds
       .filter(("value not like 'date%'"))
-      .map(line => {
-        val tokens = line.split(",")
-        Stock(
-          null
-          , tokens(1).toDouble
-          , tokens(2).toDouble
-          , tokens(3).toDouble
-          , tokens(4).toDouble
-          , tokens(5).toDouble
-          , tokens(6).toDouble
-          , tokens(7)
-        )
-      })
+      .map(toStock)
   }
 
   def main(args: Array[String]): Unit = {

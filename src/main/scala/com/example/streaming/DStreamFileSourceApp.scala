@@ -3,7 +3,7 @@ package com.example.streaming
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
-object StreamAppDirectoryWatch {
+object DStreamFileSourceApp {
 
 
   def main(args:Array[String]) {
@@ -14,11 +14,8 @@ object StreamAppDirectoryWatch {
 
     val sc = new SparkContext(conf)
 
-    val timestamp = new java.util.Date().getTime
-
-    val checkpointDir = s"spark-checkpoint $timestamp"
-
-    val rawStorage = "raw-storage"
+    val checkpointDir = "spark-checkpoint" + sc.applicationId + "/"
+    val rawStorage = "/tmp/streaming/" + sc.applicationId + "/"
 
     def createSSC() = {
       val ssc =  new StreamingContext(sc, Seconds(5))
