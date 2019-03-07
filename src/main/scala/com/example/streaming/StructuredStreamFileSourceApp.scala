@@ -1,6 +1,5 @@
 package com.example.streaming
 
-import com.example.helper.CassandraSink
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.streaming.Trigger

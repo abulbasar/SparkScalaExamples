@@ -1,14 +1,12 @@
-package com.example.helper
+package com.example.streaming
 
-import org.apache.spark.sql.ForeachWriter
-import com.datastax.driver.core.Session
-import com.datastax.driver.core.Cluster
 import com.datastax.driver.core.ProtocolOptions.Compression
-import com.datastax.driver.core.PoolingOptions
-import com.datastax.driver.core.HostDistance
-import org.apache.spark.sql.Row
+import com.datastax.driver.core.{Cluster, HostDistance, PoolingOptions, Session}
+import org.apache.spark.sql.{ForeachWriter, Row}
 
-class CassandraSink(keySpace: String, contactPoints: String) extends ForeachWriter[Row] {
+class CassandraSink(keySpace: String, contactPoints: String)
+  extends ForeachWriter[Row] {
+
   private var session: Session = _
 
   def close(errorOrNull: Throwable): Unit = {

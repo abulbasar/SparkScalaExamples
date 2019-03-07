@@ -21,7 +21,9 @@ object KafkaDirectStream {
     spark = SparkSession.builder().config(conf).getOrCreate()
     sc = spark.sparkContext
 
-    val topics = Seq("T1").toSet
+    val topicName = "demo"
+
+    val topics = Seq(topicName).toSet
 
     val ssc = new StreamingContext(sc, Seconds(3))
 
