@@ -5,11 +5,11 @@ import org.apache.hadoop.hbase.client.Put
 import org.apache.hadoop.hbase.client.Result
 import java.text.SimpleDateFormat
 import java.nio.ByteBuffer
-import scala.reflect.ClassTag
 
-case class StockType(date: java.sql.Date, open: Double, high: Double, low: Double, close: Double, volume: Double, adjclose: Double, symbol: String) {
 
-  def toBytes = StockType.toBytes(_)
+case class Stock(date: java.sql.Date, open: Double, high: Double, low: Double, close: Double, volume: Double, adjclose: Double, symbol: String) {
+
+  def toBytes = Stock.toBytes(_)
   
   implicit def dateToString(date:java.sql.Date) = date.toString()
 
@@ -28,7 +28,7 @@ case class StockType(date: java.sql.Date, open: Double, high: Double, low: Doubl
   }
 }
 
-object StockType {
+object Stock {
  
   def toBytes(name: String) = Bytes.toBytes(name)
 
@@ -43,7 +43,7 @@ object StockType {
     buffer
   }
 
-  def apply(result: Result): StockType = {
+  def apply(result: Result): Stock = {
 
     val date = fromBytes(result, "info", "date")
     val open = fromBytes(result, "info", "open")
@@ -54,7 +54,7 @@ object StockType {
     val volume = fromBytes(result, "info", "volume")
     val symbol = fromBytes(result, "info", "symbol")
 
-    StockType(date, open, high, low, close, volume, adjClose, symbol)
+    Stock(date, open, high, low, close, volume, adjClose, symbol)
   }
 
 }

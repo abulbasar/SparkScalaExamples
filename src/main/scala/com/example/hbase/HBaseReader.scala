@@ -28,7 +28,7 @@ object HBaseReader {
                 , classOf[ImmutableBytesWritable]
                 , classOf[Result])
                 
-    val stocks = hbaseStocksRdd.map(pair => StockType(pair._2)).toDS
+    val stocks = hbaseStocksRdd.map(pair => Stock(pair._2)).toDS
     stocks.show()
 
   }
