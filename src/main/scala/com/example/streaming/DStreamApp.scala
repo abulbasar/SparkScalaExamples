@@ -15,7 +15,7 @@ object DStreamApp {
 
     val sc = new SparkContext(conf)
 
-    val checkpointDir = "spark-checkpoint" + sc.applicationId + "/"
+    val checkpointDir = "/tmp/streaming/checkpoint/" + sc.applicationId + "/"
     val rawStorage = "/tmp/streaming/" + sc.applicationId + "/"
 
     def createSSC() = {
