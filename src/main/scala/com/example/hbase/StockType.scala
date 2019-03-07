@@ -6,7 +6,6 @@ import org.apache.hadoop.hbase.client.Result
 import java.text.SimpleDateFormat
 import java.nio.ByteBuffer
 import scala.reflect.ClassTag
-import scala.tools.cmd.Opt.Implicit
 
 case class StockType(date: java.sql.Date, open: Double, high: Double, low: Double, close: Double, volume: Double, adjclose: Double, symbol: String) {
 
