@@ -15,14 +15,13 @@ object AccumulatorExample {
     val processed = sc.longAccumulator("processed")
     val rdd = sc.parallelize(0 until 100, 4)
 
-
     rdd.map{v =>
-      processed.add(1)
+      processed.add(1) // increments the value of the accumulator
       Thread.sleep(500)
       (v, v * 2)
     }.collect().foreach(println)
 
-    val count = processed.value
+    val count = processed.value // Read the value from the accumulator
 
     println(s"Total processed: $count")
 
