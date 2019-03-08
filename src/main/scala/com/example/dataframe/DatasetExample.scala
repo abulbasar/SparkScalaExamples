@@ -20,7 +20,7 @@ object DatasetExample {
     .setIfMissing("spark.master", "local")
 
   val spark:SparkSession = SparkSession.builder()
-    .config(conf).appName(getClass.getName).getOrCreate()
+    .config(conf).getOrCreate()
 
   val sc = spark.sparkContext
 
