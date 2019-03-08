@@ -1,8 +1,7 @@
 package com.example.projects.retail
 
-import com.example.hbase.AppConnectionFactory
+import org.apache.hadoop.hbase.client.{Connection, ConnectionFactory}
 import org.apache.hadoop.hbase.{HBaseConfiguration, TableName}
-import org.apache.hadoop.hbase.client.ConnectionFactory
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark.rdd.RDD
@@ -23,8 +22,32 @@ import scala.collection.JavaConverters._
 --packages org.apache.spark:spark-streaming-kafka-0-10_2.11:2.2.3 \
 target/SparkScalaExamples_0.1-jar-with-dependencies.jar
 
+Create hbase table
+hbase > create 'retail', 'info'
 
-* */
+
+Create hive table
+
+CREATE EXTERNAL TABLE retail(
+    key string
+    , invoiceNo BigInt
+    , stockCode String
+    , description String
+    , quantity Int
+    , invoiceDate Date
+    , unitPrice Double
+    , customerId BigInt
+    , country String)
+ROW format serde 'org.apache.hadoop.hive.hbase.HBaseSerDe'
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES('hbase.columns.mapping'
+= ':key,info:invoiceNo#b,info:stockCode, info:description, info:quantity#b, info:invoiceDate, info:unitPrice#b, info:customerId#b, info:country')
+TBLPROPERTIES ('hbase.table.name' = 'retail');
+
+
+
+
+*/
 
 case class Message(key:String,
                     value: String,
@@ -42,14 +65,14 @@ object KafkaDirectStream {
   var spark:SparkSession = _
   var sc:SparkContext = _
 
-  def getHBaseConf = {
+  def getHBaseConnection(): Connection = {
     val conf = HBaseConfiguration.create()
     conf.set("hbase.zookeeper.quorum", "localhost:2181")
     conf.setInt("hbase.client.scanner.caching", 10000)
-    conf
+    ConnectionFactory.createConnection(conf)
   }
 
-  def openHBaseConnection = ConnectionFactory.createConnection(getHBaseConf)
+
 
   def main(args: Array[String]): Unit = {
 
@@ -99,7 +122,7 @@ object KafkaDirectStream {
 
     parsed.print()
 
-    lazy val conn = AppConnectionFactory.openHBaseConnection
+    lazy val conn = getHBaseConnection
 
     parsed.foreachRDD((rdd:RDD[SalesRecord]) => {
       rdd.foreachPartition{batch =>
@@ -108,7 +131,6 @@ object KafkaDirectStream {
         val puts = batch.map(_.toPut).toList.asJava
         table.put(puts)
       }
-
     })
     ssc.start()
     ssc.awaitTermination()
