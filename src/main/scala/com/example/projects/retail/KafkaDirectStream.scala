@@ -41,11 +41,11 @@ CREATE EXTERNAL TABLE retail(
 ROW format serde 'org.apache.hadoop.hive.hbase.HBaseSerDe'
 STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
 WITH SERDEPROPERTIES('hbase.columns.mapping'
-= ':key,info:invoiceNo#b,info:stockCode, info:description, info:quantity#b, info:invoiceDate, info:unitPrice#b, info:customerId#b, info:country')
-TBLPROPERTIES ('hbase.table.name' = 'retail');
+= ':key,info:invoiceNo,info:stockCode, info:description, info:quantity, info:invoiceDate, info:unitPrice, info:customerId, info:country')
+TBLPROPERTIES ('hbase.table.name' = 'retail', 'hbase.table.default.storage.type' = 'binary');
 
 
-
+Try with info:stockCode#b
 
 */
 

@@ -17,26 +17,21 @@ case class SalesRecord (
     , customerId:Long
     , country:String){
 
-  def toBytes = SalesRecord.toBytes(_)
-
-  implicit def dateToString(date:java.sql.Date) = date.toString()
+  def toBytes(s: String) = Bytes.toBytes(s)
 
   def toPut = {
-
     val rowKey = s"$invoiceNo:$stockCode"
-
     val cf = toBytes("info")
     new Put(toBytes(rowKey))
       .addColumn(cf, toBytes("invoiceNo"), Bytes.toBytes(invoiceNo))
       .addColumn(cf, toBytes("stockCode"), Bytes.toBytes(stockCode))
       .addColumn(cf, toBytes("description"), Bytes.toBytes(description))
       .addColumn(cf, toBytes("quantity"), Bytes.toBytes(quantity))
-      .addColumn(cf, toBytes("invoiceDate"), Bytes.toBytes(invoiceDate))
+      .addColumn(cf, toBytes("invoiceDate"), Bytes.toBytes(invoiceDate.getTime))
       .addColumn(cf, toBytes("unitPrice"), Bytes.toBytes(unitPrice))
       .addColumn(cf, toBytes("customerId"), Bytes.toBytes(customerId))
       .addColumn(cf, toBytes("country"), Bytes.toBytes(country))
   }
-
 }
 
 
@@ -80,7 +75,5 @@ object SalesRecord{
       , tokens(7)
     )
   }
-
-  def toBytes(name: String) = Bytes.toBytes(name)
 
 }

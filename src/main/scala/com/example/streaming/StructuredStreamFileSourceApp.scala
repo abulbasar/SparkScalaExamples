@@ -1,5 +1,6 @@
 package com.example.streaming
 
+import com.example.streaming.sinks.CassandraSink
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.streaming.Trigger
@@ -36,17 +37,23 @@ object StructuredStreamFileSourceApp {
       .format("csv")
       .text("/tmp/source")
 
+    stream.printSchema()
+
+    println(s"Stream, isStreaming: ${stream.isStreaming}")
+
     print("Storage level: ", stream.storageLevel)
 
-    //Sink 1
+    //Sink 1: console
     stream
       .writeStream
       .trigger(Trigger.ProcessingTime(0))
       .outputMode("append")
       .format("console")
+      .option("truncate", false)
+      .option("numRows", 10)
       .start()
 
-    //Sink 2
+    //Sink 2: filesystem
     stream
       .writeStream
       .outputMode("append")
@@ -55,12 +62,10 @@ object StructuredStreamFileSourceApp {
       .option("checkpointLocation", "checkpoint")
       .start()
 
-    val cassandraSink = new CassandraSink("demo"
-      , "localhost:9042")
-
+    // Sink 3: cassandra
     stream
       .writeStream
-      .foreach(cassandraSink)
+      .foreach(new CassandraSink("demo", "localhost:9042"))
       .outputMode("append")
       .trigger(Trigger.ProcessingTime(0))
       .start()

@@ -1,4 +1,4 @@
-package com.example.streaming
+package com.example.streaming.sinks
 
 import com.datastax.driver.core.ProtocolOptions.Compression
 import com.datastax.driver.core.{Cluster, HostDistance, PoolingOptions, Session}
@@ -32,8 +32,6 @@ class CassandraSink(keySpace: String, contactPoints: String)
   }
 
   def process(value: Row) {
-    
     print(value)
-
   }
 }
