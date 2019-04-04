@@ -5,7 +5,7 @@
    <artifactId>SparkScalaExamples</artifactId>
    <version>0.1</version>
    <!-- 
-	Remember to set JAVA_HOME in /etc/hadoop/conf/hadoop-env.sh and restart resource manager and node manager serivces  
+	Remember to set JAVA_HOME to JDK1.8 in /etc/hadoop/conf/hadoop-env.sh and restart resource manager and node manager serivces  
    -->
    <build>
       <finalName>${project.name}_${project.version}</finalName>
