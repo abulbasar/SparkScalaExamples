@@ -34,7 +34,24 @@ object DStreamApp {
 
     raw.saveAsTextFiles(rawStorage , ".data")
 
-    raw.print()
+    //raw.print()
+
+    /*
+    raw.map(line => {
+      line.toUpperCase
+    }).print(10)
+    */
+
+
+    raw.mapPartitions((batch: Iterator[String]) => {
+    
+      val partitionOutput = batch.map((record: String) => {
+        record.toUpperCase
+      })
+      partitionOutput
+    
+    }).print()
+    
 
     ssc.start()
     ssc.awaitTermination()
