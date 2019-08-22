@@ -59,17 +59,19 @@ object DStreamFileSourceApp {
 
     raw.foreachRDD((rdd:RDD[String]) => {
       val ds = rdd.map((line:String) => {
-        val tokens = line.split(",")
-        MyStock(
-          tokens(0),
-          tokens(1).toDouble,
-          tokens(2).toDouble,
-          tokens(3).toDouble,
-          tokens(4).toDouble,
-          tokens(5).toDouble,
-          tokens(6).toDouble,
-          tokens(7)
-        )
+        if(!line.startsWith("date")){
+          val tokens = line.split(",")
+          MyStock(
+            tokens(0),
+            tokens(1).toDouble,
+            tokens(2).toDouble,
+            tokens(3).toDouble,
+            tokens(4).toDouble,
+            tokens(5).toDouble,
+            tokens(6).toDouble,
+            tokens(7)
+          )
+        }
       }).toDS()
 
       ds.createOrReplaceTempView("stocks")
