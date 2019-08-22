@@ -30,7 +30,7 @@ object DStreamApp {
 
     val ssc = StreamingContext.getOrCreate(checkpointDir, createSSC)
 
-    val raw = ssc.socketTextStream("localhost", 9999, StorageLevel.MEMORY_ONLY)
+    val raw:DStream[String] = ssc.socketTextStream("localhost", 9999, StorageLevel.MEMORY_ONLY)
 
     raw.saveAsTextFiles(rawStorage , ".data")
 
