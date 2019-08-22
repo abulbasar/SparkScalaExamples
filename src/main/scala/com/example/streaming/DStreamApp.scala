@@ -6,7 +6,11 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object DStreamApp {
 
-
+  /*
+  Start socket source
+  $ nc -nlk 9999
+  
+  */
   def main(args:Array[String]) {
 
     val conf = new SparkConf()
@@ -16,7 +20,7 @@ object DStreamApp {
     val sc = new SparkContext(conf)
 
     val checkpointDir = "/tmp/streaming/checkpoint/" + sc.applicationId + "/"
-    val rawStorage = "/tmp/streaming/" + sc.applicationId + "/"
+    val rawStorage = "/tmp/streaming/" + sc.applicationId + "/raw"
 
     def createSSC() = {
       val ssc =  new StreamingContext(sc, Seconds(5))
@@ -26,10 +30,9 @@ object DStreamApp {
 
     val ssc = StreamingContext.getOrCreate(checkpointDir, createSSC)
 
-    val raw = ssc.socketTextStream("localhost"
-      , 9999, StorageLevel.MEMORY_ONLY)
+    val raw = ssc.socketTextStream("localhost", 9999, StorageLevel.MEMORY_ONLY)
 
-    raw.saveAsTextFiles(rawStorage , "")
+    raw.saveAsTextFiles(rawStorage , ".data")
 
     raw.print()
 
